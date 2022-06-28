@@ -64,5 +64,6 @@ export default {
   color: whitesmoke;
   background: #141414;
   min-height: 100vh;
+  padding-top: 4rem;
 }
 </style>

@@ -35,8 +35,12 @@ export default {
 
 <style lang="scss" scoped>
 header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
     max-height: 4rem;
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
+    background: #141414;
     padding: 1rem 2rem;
 
     .logo {
