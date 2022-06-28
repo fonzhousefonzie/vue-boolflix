@@ -2,6 +2,7 @@
   <div id="app">
     <TheHeader />
     <TheMain />
+    <footer class="py-3"></footer>
   </div>
 </template>
 
