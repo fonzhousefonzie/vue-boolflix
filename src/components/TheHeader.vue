@@ -42,6 +42,7 @@ header {
     max-height: 4rem;
     background: #141414;
     padding: 1rem 2rem;
+    z-index: 10;
 
     .logo {
         height: 100%;

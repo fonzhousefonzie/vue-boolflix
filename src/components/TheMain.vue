@@ -17,6 +17,8 @@
                         <strong>Voto:</strong> <span v-html="voteLoader(movie)"></span>
                         <br>
                         <strong>Trama: </strong>{{ movie.overview }}
+                        <br>
+                        <GenreAndCast :id="movie.id"/>
                     </div>
                 </div>
             </li>
@@ -38,6 +40,8 @@
                         <strong>Voto:</strong> <span v-html="voteLoader(serie)"></span>
                         <br>
                         <strong>Trama: </strong>{{ serie.overview }}
+                        <br>
+                        <GenreAndCast :id="serie.id"/>
                     </div>
                 </div>
             </li>
@@ -47,48 +51,49 @@
 
 <script>
 import { state } from '@/store'
+import GenreAndCast from './GenreAndCast.vue'
 
 export default {
     methods: {
         imgLoader(name) {
             if (name.poster_path === null) {
-                return require('../assets/imgError.png')
-            } else {
-                return 'https://image.tmdb.org/t/p/w342' + name.poster_path
+                return require("../assets/imgError.png");
+            }
+            else {
+                return "https://image.tmdb.org/t/p/w342" + name.poster_path;
             }
         },
         voteLoader(name) {
             const vote = Math.ceil(name.vote_average / 2);
             const full = [];
             const empty = [];
-
             for (let i = 0; i < vote; i++) {
-                full.push('<i class="fa fa-solid fa-star"></i>')
+                full.push("<i class=\"fa fa-solid fa-star\"></i>");
             }
             for (let i = 0; i < (5 - vote); i++) {
-                empty.push('<i class="fa fa-regular fa-star"></i>')
+                empty.push("<i class=\"fa fa-regular fa-star\"></i>");
             }
-            const fullVote = full.join('') + empty.join('');
-
+            const fullVote = full.join("") + empty.join("");
             return fullVote;
         }
     },
     computed: {
         findMovies() {
-            return state.moviesList
+            return state.moviesList;
         },
         findSeries() {
-            return state.seriesList
+            return state.seriesList;
         },
         loadingMovies() {
             let loading = state.loadingMovies;
-            return loading
+            return loading;
         },
         loadingSeries() {
             let loading = state.loadingSeries;
-            return loading
+            return loading;
         }
-    }
+    },
+    components: { GenreAndCast }
 }
 </script>
 
@@ -143,7 +148,7 @@ ul {
             bottom: 0;
             left: 0;
             right: 0;
-            background: rgba(0,0,0,0.9);
+            background: rgba(0, 0, 0, 0.9);
             border: 1px solid white;
             padding: 1rem;
             overflow: auto;
@@ -159,7 +164,7 @@ ul {
                 }
             }
 
-            &:hover{
+            &:hover {
                 opacity: 1;
             }
         }
