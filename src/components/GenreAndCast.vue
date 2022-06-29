@@ -16,7 +16,8 @@ import axios from 'axios'
 
 export default {
     props:{
-        id: String
+        id: Number,
+        kind: String
     },
     data(){
         return{
@@ -26,10 +27,9 @@ export default {
     },
     methods:{
         getActors() {
-            axios.get(`https://api.themoviedb.org/3/movie/${this.id}/credits`, {
+            axios.get(`https://api.themoviedb.org/3/${this.kind}/${this.id}/credits`, {
                 params: {
-                    api_key: "6fc530c8a4a5679024aea82b062cbd34",
-                    language: "it-IT"
+                    api_key: "6fc530c8a4a5679024aea82b062cbd34"
                 }
             }).then((resp) => {
                 for (let i = 0; i < 5; i++) {
@@ -38,10 +38,9 @@ export default {
             });
         },
         getGenres() {
-            axios.get(`https://api.themoviedb.org/3/movie/${this.id}`, {
+            axios.get(`https://api.themoviedb.org/3/${this.kind}/${this.id}`, {
                 params: {
-                    api_key: "6fc530c8a4a5679024aea82b062cbd34",
-                    language: "it-IT"
+                    api_key: "6fc530c8a4a5679024aea82b062cbd34"
                 }
             }).then((resp) => {
                 for (let i = 0; i < resp.data.genres.length; i++) {

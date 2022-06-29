@@ -18,7 +18,7 @@
                         <br>
                         <strong>Trama: </strong>{{ movie.overview }}
                         <br>
-                        <GenreAndCast :id="movie.id"/>
+                        <GenreAndCast :id="movie.id" :kind="'movie'"/>
                     </div>
                 </div>
             </li>
@@ -26,7 +26,7 @@
         <h2>Serie Tv</h2>
         <ul>
             <div class="loader" :class="{ 'd-none': !loadingSeries }"><img src="../assets/loader.png" alt=""></div>
-            <li v-for="serie in findSeries" :key="serie.name" class="my-3" :class="{ 'd-none': loadingMovies }">
+            <li v-for="serie in findSeries" :key="serie.name" class="my-3" :class="{ 'd-none': loadingSeries }">
                 <div class="img-container"><img :src="imgLoader(serie)" :alt="serie.name">
                     <div class="info-container">
                         <strong class="fs-4">{{ serie.name }}</strong>
@@ -41,7 +41,7 @@
                         <br>
                         <strong>Trama: </strong>{{ serie.overview }}
                         <br>
-                        <GenreAndCast :id="serie.id"/>
+                        <GenreAndCast :id="serie.id" :kind="'tv'"/>
                     </div>
                 </div>
             </li>
@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import { state } from '@/store'
+import { fetchTopRated, state } from '@/store'
 import GenreAndCast from './GenreAndCast.vue'
 
 export default {
@@ -93,12 +93,15 @@ export default {
             return loading;
         }
     },
+    mounted(){
+        fetchTopRated()
+    },
     components: { GenreAndCast }
 }
 </script>
 
 <style lang="scss" scoped>
-ul {
+h2+ul {
     list-style: none;
     display: flex;
     gap: 2rem;

@@ -4,6 +4,26 @@
             <img alt="Boolflix Logo" src="../assets/logo.png">
         </div>
         <div class="search-bar">
+            <div class="dropdown text-start">
+                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    Film per Genere
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item" href="#" v-for="genre in moviesGenres" :key="genre"
+                            @click.prevent="showSelectedMoviesByGenre(genre.id)">{{ genre.name }}</a></li>
+                </ul>
+            </div>
+            <div class="dropdown text-start">
+                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    Serie Tv per Genere
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item" href="#" v-for="genre in seriesGenres" :key="genre"
+                            @click.prevent="showSelectedSeriesByGenre(genre.id)">{{ genre.name }}</a></li>
+                </ul>
+            </div>
             <input type="text" placeholder="Cerca un titolo" v-model="searchText"
                 @keyup.enter.prevent="searchMoviesAndSeries">
             <i class="fa fa-solid fa-magnifying-glass" @click="searchMoviesAndSeries"></i>
@@ -12,23 +32,58 @@
 </template>
 
 <script>
-import { fetchMovies } from '../store'
-import { fetchSeries } from '../store'
+import { fetchMovies, fetchSeries, fetchMoviesByGenre, fetchSeriesByGenre } from '../store'
+import axios from 'axios'
 
 export default {
     data() {
         return {
-            searchText: ""
+            searchText: "",
+            moviesGenres: [],
+            seriesGenres: []
         }
     },
     methods: {
         searchMoviesAndSeries() {
             fetchMovies(this.searchText);
             fetchSeries(this.searchText);
+            this.searchText = "";
+        },
+        getMoviesGenres() {
+            axios.get("https://api.themoviedb.org/3/genre/movie/list", {
+                params: {
+                    api_key: "6fc530c8a4a5679024aea82b062cbd34",
+                    language: "it-IT"
+                }
+            }).then((resp) => {
+                for (let i = 0; i < resp.data.genres.length; i++) {
+                    this.moviesGenres.push(resp.data.genres[i]);
+                }
+            });
+        },
+        getSeriesGenres() {
+            axios.get("https://api.themoviedb.org/3/genre/tv/list", {
+                params: {
+                    api_key: "6fc530c8a4a5679024aea82b062cbd34",
+                    language: "it-IT"
+                }
+            }).then((resp) => {
+                for (let i = 0; i < resp.data.genres.length; i++) {
+                    this.seriesGenres.push(resp.data.genres[i]);
+                }
+            });
+        },
+        showSelectedMoviesByGenre(id) {
+            fetchMoviesByGenre(id);
+        },
+        showSelectedSeriesByGenre(id) {
+            fetchSeriesByGenre(id);
         }
     },
     mounted() {
-        this.searchMoviesAndSeries()
+        this.searchMoviesAndSeries(),
+            this.getMoviesGenres(),
+            this.getSeriesGenres()
     }
 }
 </script>
