@@ -1,6 +1,6 @@
 <template>
     <header class="d-flex justify-content-between text-light">
-        <div class="logo">
+        <div class="logo" @click="refresh()">
             <img alt="Boolflix Logo" src="../assets/logo.png">
         </div>
         <div class="search-bar">
@@ -10,7 +10,7 @@
                     Film per Genere
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item" href="#" v-for="genre in moviesGenres" :key="genre"
+                    <li><a class="dropdown-item" href="#" v-for="genre in moviesGenres" :key="genre.name"
                             @click.prevent="showSelectedMoviesByGenre(genre.id)">{{ genre.name }}</a></li>
                 </ul>
             </div>
@@ -20,7 +20,7 @@
                     Serie Tv per Genere
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item" href="#" v-for="genre in seriesGenres" :key="genre"
+                    <li><a class="dropdown-item" href="#" v-for="genre in seriesGenres" :key="genre.name"
                             @click.prevent="showSelectedSeriesByGenre(genre.id)">{{ genre.name }}</a></li>
                 </ul>
             </div>
@@ -78,6 +78,9 @@ export default {
         },
         showSelectedSeriesByGenre(id) {
             fetchSeriesByGenre(id);
+        },
+        refresh(){
+            window.location.reload();
         }
     },
     mounted() {
@@ -101,6 +104,7 @@ header {
 
     .logo {
         height: 100%;
+        cursor: pointer;
 
         img {
             max-width: 150px;
