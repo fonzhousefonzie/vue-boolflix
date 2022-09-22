@@ -1,24 +1,4 @@
 # vue-boolflix
-
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Simple project with Vue.js, makes an axios call to a movies and tv series API sorting by genre. Made for Boolean Careers
+<hr>
+<img src="https://user-images.githubusercontent.com/100787980/191829638-f6a456cc-6ac5-4b91-aab0-e7c3d792b519.png">
